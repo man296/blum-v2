@@ -480,4 +480,254 @@ class BlumTod:
                 return
             if task_status == "READY_FOR_CLAIM" or task_status == "STARTED":
                 _res = await self.http(claim_task_url, self.headers, "")
-                message = _res.json().ge
+                message = _res.json().get("message")
+                if message:
+                    return
+                _status = _res.json().get("status")
+                if _status == "FINISHED":
+                    self.log(f"{green}success complete task id {white}{task_title} !")
+                    return
+            if task_status == "NOT_STARTED" and task_type == "PROGRESS_TARGET":
+                return
+            if task_status == "NOT_STARTED":
+                _res = await self.http(start_task_url, self.headers, "")
+                await countdown(3)
+                try:
+                    message = _res.json().get("message")
+                    if message:
+                        return
+                    task_status = _res.json().get("status")
+                    continue
+                except Exception as e:
+                    self.log(e)
+                    return
+            if validation_type == "KEYWORD" or task_status == "READY_FOR_VERIFY":
+                await countdown(3)
+                verify_url = (
+                    f"https://earn-domain.blum.codes/api/v1/tasks/{task_id}/validate"
+                )
+                answer_url = "https://raw.githubusercontent.com/artlmrx1/artlmrx1.github.io/aeb2f728cc9b41bad90584ef498fe8dd169b825a/answer.json"
+                res_ = await self.http(answer_url, {"User-Agent": "Marin Kitagawa"})
+                answers = res_.json()
+                answer = answers.get(task_id)
+                if not answer:
+                    answer = answers_local.get(task_id)
+                    if not answer:
+                        self.log(f"{yellow}answers to quiz tasks are not yet available.")
+                        break
+                        return
+                data = {"keyword": answer}
+                res = await self.http(verify_url, self.headers, json.dumps(data))
+                if res:
+                    message = res.json().get("message")
+                    if message:
+                        self.log(message)
+                        break
+                        return
+                    task_status = res.json().get("status")
+                    continue
+                else:
+                    break
+            else:
+                break
+
+
+
+async def countdown(t):
+    for i in range(t, 0, -1):
+        minute, seconds = divmod(i, 60)
+        hour, minute = divmod(minute, 60)
+        seconds = str(seconds).zfill(2)
+        minute = str(minute).zfill(2)
+        hour = str(hour).zfill(2)
+        print(f"waiting for {hour}:{minute}:{seconds} ", flush=True, end="\r")
+        await asyncio.sleep(1)
+
+
+async def get_data(data_file, proxy_file):
+    async with aiofiles.open(data_file) as w:
+        read = await w.read()
+        datas = [i for i in read.splitlines() if len(i) > 10]
+    async with aiofiles.open(proxy_file) as w:
+        read = await w.read()
+        proxies = [i for i in read.splitlines() if len(i) > 5]
+    return datas, proxies
+
+
+async def main():
+    init()
+    banner = f"""{Fore.GREEN}
+        {Style.RESET_ALL}"""
+    arg = argparse.ArgumentParser()
+    arg.add_argument(
+        "--data",
+        "-D",
+        default=data_file,
+        help=f"Perform custom input for data files (default: {data_file})",
+    )
+    arg.add_argument(
+        "--proxy",
+        "-P",
+        default=proxy_file,
+        help=f"Perform custom input for proxy files (default : {proxy_file})",
+    )
+    arg.add_argument(
+        "--action",
+        "-A",
+        help="Function to directly enter the menu without displaying input",
+    )
+    arg.add_argument(
+        "--worker",
+        "-W",
+        help="Total workers or number of threads to be used (default : cpu core / 2)",
+    )
+    arg.add_argument("--marin", action="store_true")
+    args = arg.parse_args()
+    await init_db()
+    if not await aiofiles.ospath.exists(args.data):
+        async with aiofiles.open(args.data, "a") as w:
+            pass
+    if not await aiofiles.ospath.exists(args.proxy):
+        async with aiofiles.open(args.proxy, "a") as w:
+            pass
+    if not await aiofiles.ospath.exists(config_file):
+        async with aiofiles.open(config_file, "w") as w:
+            _config = {
+                "auto_claim": True,
+                "auto_task": True,
+                "auto_game": True,
+                "low": 240,
+                "high": 250,
+                "clow": 30,
+                "chigh": 60,
+            }
+            await w.write(json.dumps(_config, indent=4))
+    while True:
+        if not args.marin:
+            os.system("cls" if os.name == "nt" else "clear")
+        print(banner)
+        async with aiofiles.open(config_file) as r:
+            read = await r.read()
+            cfg = json.loads(read)
+            config = Config(
+                auto_task=cfg.get("auto_task"),
+                auto_game=cfg.get("auto_game"),
+                auto_claim=cfg.get("auto_claim"),
+                low=int(cfg.get("low", 240)),
+                high=int(cfg.get("high", 250)),
+                clow=int(cfg.get("clow", 30)),
+                chigh=int(cfg.get("chigh", 60)),
+            )
+        datas, proxies = await get_data(data_file=args.data, proxy_file=args.proxy)
+        menu = f"""
+{red}【Ｅｍａｎ　Ｄｅｖ】
+{white}data file :{green} {args.data}
+{white}proxy file :{green} {args.proxy}
+{green}total data :{white} {len(datas)}
+{green}total proxy :{white} {len(proxies)}
+
+    {green}1{white}.{green}) {white}set on/off auto claim ({(green + "active" if config.auto_claim else red + "non-active")})
+    {green}2{white}.{green}) {white}set on/off auto solve task ({(green + "active" if config.auto_task else red + "non-active")})
+    {green}3{white}.{green}) {white}set on/off auto play game ({(green + "active" if config.auto_game else red + "non-active")})
+    {green}4{white}.{green}) {white}set game point {green}({config.low}-{config.high})
+    {green}5{white}.{green}) {white}set wait time before start {green}({config.clow}-{config.chigh})
+    {green}6{white}.{green}) {white}start bot (multiprocessing)
+    {green}7{white}.{green}) {white}start bot (sync mode)
+        """
+        #{green}3{white}.{green}) {white}set on/off auto play game ({(green + "active" if config.auto_game else red + "non-active")})
+        #{green}3{white}.{green}) {white}set on/off auto play game ({(red + "games are not available right now!")})
+        opt = None
+        if args.action:
+            opt = args.action
+        else:
+            print(menu)
+            opt = input(f"{green}input number : {white}")
+            print(f"{white}~" * 50)
+        if opt == "1":
+            cfg["auto_claim"] = False if config.auto_claim else True
+            async with aiofiles.open(config_file, "w") as w:
+                await w.write(json.dumps(cfg, indent=4))
+            print(f"{green}success update auto claim config")
+            input(f"{blue}press enter to continue")
+            opt = None
+            continue
+        if opt == "2":
+            cfg["auto_task"] = False if config.auto_task else True
+            async with aiofiles.open(config_file, "w") as w:
+                await w.write(json.dumps(cfg, indent=4))
+            print(f"{green}success update auto task config !")
+            input(f"{blue}press enter to continue")
+            opt = None
+            continue
+        if opt == "3":
+            cfg["auto_game"] = False if config.auto_game else True
+            async with aiofiles.open(config_file, "w") as w:
+                await w.write(json.dumps(cfg, indent=4))
+            print(f"{green}success update auto game config !")
+            input(f"{blue}press enter to continue")
+            opt = None
+            continue
+        if opt == "4":
+            low = input(f"{green}input low game point : {white}") or 240
+            high = input(f"{green}input high game point : {white}") or 250
+            cfg["low"] = low
+            cfg["high"] = high
+            async with aiofiles.open(config_file, "w") as w:
+                await w.write(json.dumps(cfg, indent=4))
+            print(f"{green}success update game point !")
+            input(f"{blue}press enter to continue")
+            opt = None
+            continue
+        if opt == "6":
+            if not args.worker:
+                worker = int(os.cpu_count() / 2)
+                if worker < 1:
+                    worker = 1
+            else:
+                worker = int(args.worker)
+            sema = asyncio.Semaphore(worker)
+
+            async def bound(sem, params):
+                async with sem:
+                    return await BlumTod(*params).start()
+
+            while True:
+                datas, proxies = await get_data(args.data, args.proxy)
+                tasks = [
+                    asyncio.create_task(bound(sema, (no, data, proxies, config)))
+                    for no, data in enumerate(datas)
+                ]
+                result = await asyncio.gather(*tasks)
+                end = int(datetime.now().timestamp())
+                total = min(result) - end
+                await countdown(total)
+        if opt == "7":
+            while True:
+                datas, proxies = await get_data(args.data, args.proxy)
+                result = []
+                for no, data in enumerate(datas):
+                    res = await BlumTod(
+                        id=no, query=data, proxies=proxies, config=config
+                    ).start()
+                    result.append(res)
+                end = int(datetime.now().timestamp())
+                total = min(result) - end
+                await countdown(total)
+        if opt == "5":
+            low = input(f"{green}input low wait time : {white}") or 30
+            high = input(f"{green}input high wait time : {white}") or 60
+            cfg["clow"] = low
+            cfg["chigh"] = high
+            async with aiofiles.open(config_file, "w") as w:
+                await w.write(json.dumps(cfg, indent=4))
+            print(f"{green}success update wait time !")
+            input(f"{blue}press enter to continue")
+            opt = None
+            continue
+
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        exit()
