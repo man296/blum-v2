@@ -197,11 +197,6 @@ Please pay close attention to whether the proxy you are using requires authentic
    python bot.py
    ```
 
-# Viewing Reports
-
-To view a report of the total balance of all accounts you can run a file called `report.py`
-
-
 ## How to get tgWebAppData (query_id / user_id)
 
 1. Login telegram via portable or web version
@@ -228,15 +223,6 @@ You can add more and run the accounts in turn by entering a query id in new line
 query_id=xxxxxxxxx-Rxxxxujhash=cxxx
 query_id=xxxxxxxxx-Rxxxxujhash=cxxxx
 ```
-
-
-# Error Table
-
-| Error                 | Description                                                                                                                          |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| failed get json error | This is because the server response is not in JSON format and may be in HTML. You can check the server response in the http.log file |
-| failed get task list  | This is because the server response doesn't provide the expected response. You can check the server response in the http.log file    |
-| cannot start game     | Similar to the above error, this is due to the server. You can check the server response in the http.log file                        |
 
 ## This bot helpfull?  Please support me by buying me a coffee: 
 ``` 0x9feefCA42b358605f01Ad3A9A7453D57a0d6f42e ``` - BSC (BEP 20)
