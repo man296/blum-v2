@@ -1,4 +1,4 @@
-# BlumCum
+# Blum-v2 
 
 AUTO CLAIM FOR BLUM / @blum
 
@@ -6,7 +6,7 @@ AUTO CLAIM FOR BLUM / @blum
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/man296)
 
 # Table of Contents
-- [BlumCum](#blumcum)
+- [BlumCum](#blum-v2)
 - [Warning](#warning)
 - [Available Features](#available-features)
 - [Registration](#registration)
