@@ -2,8 +2,8 @@
 
 AUTO CLAIM FOR BLUM / @blum
 
-[![Join our Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/cucumber_scripts)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cucumber-pickle/Cucumber)
+[![Join our Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/tgairdroptrick)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/man296)
 
 # Table of Contents
 - [BlumCum](#blumcum)
@@ -40,7 +40,7 @@ All risks are borne by the user
 
 # Registration
 
-Click the following link to register: [https://t.me/BlumCryptoBot/](https://t.me/blum/app?startapp=ref_xHxwOhtrgC)
+Click the following link to register: [https://t.me/BlumCryptoBot/](https://t.me/blum/app?startapp=ref_8xXVREQ6fD)
 
 # How to Use
 
@@ -239,18 +239,13 @@ query_id=xxxxxxxxx-Rxxxxujhash=cxxxx
 | cannot start game     | Similar to the above error, this is due to the server. You can check the server response in the http.log file                        |
 
 ## This bot helpfull?  Please support me by buying me a coffee: 
-``` 0xc4bb02b8882c4c88891b4196a9d64a20ef8d7c36 ``` - BSC (BEP 20)
+``` 0x9feefCA42b358605f01Ad3A9A7453D57a0d6f42e ``` - BSC (BEP 20)
 
-``` UQBiNbT2cqf5gLwjvfstTYvsScNj-nJZlN2NSmZ97rTcvKz0 ``` - TON
+``` UQCRZj5hG8CrWOQEOLdMex3VGcR6SDABBNnxBMmBscTpBunT ``` - TON
 
-``` 0xc4bb02b8882c4c88891b4196a9d64a20ef8d7c36 ``` - Optimism
-
-``` THaLf1cdEoaA73Kk5yiKmcRwUTuouXjM17 ``` - TRX (TRC 20)
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+``` bc1qjeuyav3sn2ryph4ag9fa5nshtxtkgau0q0vs43 ``` - BTC (NATIVE SEGWIT)
 
 ## Contact
-For questions or support, please contact [CUCUMBER TG CHAT](https://t.me/cucumber_scripts_chat)
+For questions or support, please contact [Developer](https://t.me/bukaneman)
 
 # Thank You
