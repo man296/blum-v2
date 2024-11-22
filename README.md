@@ -91,74 +91,6 @@ http://69.69.69.69:6969
 
 Please pay close attention to whether the proxy you are using requires authentication or not, as many people DM me asking about how to use proxies.
 
-## Windows 
-
-1. Make sure your computer has Python and Git installed.
-
-    Recommendation: Use Python version 3.8+ (3.8 or newer)
-   
-   Python site: [https://python.org](https://python.org)
-   
-   Git site: [https://git-scm.com/](https://git-scm.com/)
-
-2. Clone this repository.
-   ```shell
-   git clone https://github.com/cucumber-pickle/BlumCum.git
-   ```
-
-3. Enter the BlumCum folder
-   ```
-   cd BlumCum
-   ```
-
-4. Install the required modules/libraries.
-   ```
-   python -m pip install -r requirements.txt
-   ```
-
-5. Edit the `data.txt` file, enter your query data into the `data.txt` file. One line for 1 account, if you want to add a 2nd account, fill it in on a new line.
-
-6. Run the program/script.
-   ```
-   python bot.py
-   ```
-
-## Linux 
-
-1. Make sure your computer has Python and Git installed.
-
-    Recommendation: Use Python version 3.8+ (3.8 or newer)
-   
-   Python
-   ```shell
-   sudo apt install python3 python3-pip
-   ```
-   Git
-   ```shell
-   sudo apt install git
-   ```
-
-2. Clone this repository.
-   ```shell
-   git clone https://github.com/cucumber-pickle/BlumCum.git
-   ```
-
-3. Enter the BlumCum folder
-   ```
-   cd BlumCum
-   ```
-
-4. Install the required modules/libraries.
-   ```
-   python -m pip install -r requirements.txt
-   ```
-
-5. Edit the `data.txt` file, enter your query data into the `data.txt` file. One line for 1 account, if you want to add a 2nd account, fill it in on a new line.
-
-6. Run the program/script.
-   ```
-   python bot.py
-   ```
 
 ## Termux
 
@@ -177,7 +109,7 @@ Please pay close attention to whether the proxy you are using requires authentic
 
 2. Clone this repository.
    ```shell
-   git clone https://github.com/cucumber-pickle/BlumCum.git
+   git clone https://github.com/man296/blum-v2.git
    ```
 
 3. Enter the BlumCum folder
