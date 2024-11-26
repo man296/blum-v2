@@ -99,7 +99,7 @@ Please pay close attention to whether the proxy you are using requires authentic
 
 3. Enter the blum-v2 folder
    ```
-   cd BlumCum
+   cd blum-v2
    ```
 
 4. Install the required modules/libraries.
