@@ -97,7 +97,7 @@ Please pay close attention to whether the proxy you are using requires authentic
    git clone https://github.com/man296/blum-v2.git
    ```
 
-3. Enter the BlumCum folder
+3. Enter the blum-v2 folder
    ```
    cd BlumCum
    ```
